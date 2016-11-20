@@ -18,7 +18,7 @@
 
 
 #include	<stdlib.h>
-#include  	<stdio.h>
+#include  <stdio.h>
 #include	<string.h>
 
 struct Test {
@@ -27,6 +27,12 @@ struct Test {
 	int y;
 };
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  reverse_str
+ *  Description:  
+ * =====================================================================================
+ */
 	void
 reverse_str ( char *str )
 {
@@ -48,6 +54,12 @@ reverse_str ( char *str )
 	}
 }		/* -----  end of function reverse_str  ----- */
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  mirror
+ *  Description:  
+ * =====================================================================================
+ */
 	void
 mirror ( struct Test *tc )
 {
@@ -59,6 +71,13 @@ mirror ( struct Test *tc )
 	}
 }		/* -----  end of function mirror  ----- */
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  main
+ *  Description:  
+ * =====================================================================================
+ */
 	int
 main ( int argc, char *argv[] )
 {
