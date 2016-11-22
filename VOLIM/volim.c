@@ -21,18 +21,7 @@
 #include	<string.h>
 
 
-struct box {
-	int time_left;
-	char answer;
-};
-
-struct player {
-	struct box b;
-	int time;
-	int label;
-};
-
-static const int TIME_TO_EXPLODE = 210;
+static int time_left = 210;
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -43,9 +32,7 @@ static const int TIME_TO_EXPLODE = 210;
 	int
 main ( int argc, char *argv[] )
 {
-	struct player *p;
-	
-	int i, k, n, t, ts[100];
+	int i, j, k, n, t, ts[100];
 	char z, cs[100];
 	memset(ts, 0, 100);
 	memset(cs, 0, 100);
@@ -55,12 +42,6 @@ main ( int argc, char *argv[] )
 	scanf("%d", &n);
 	if (n < 1 || n > 100)
 		return 1;
-	if (!(p = malloc(sizeof(struct player)* 8)))
-		return 1;
-	for ( i = 0; i < 8; i++){
-		(p + i)->label = i;
-		(p + i)->time = 0;
-	}
 
 	i = 0;
 	do{
@@ -71,35 +52,23 @@ main ( int argc, char *argv[] )
 		cs[i] = z;
 		i++;
 	} while (i != n);
-	
+
 	i = k - 1;
-	
-	(p + i)->b.time_left = TIME_TO_EXPLODE;
+	j = 0;
 	for (;;){
-		switch(cs[i]){
-			case 'T':
-				(p + i)->b.time_left -= ts[i];
-				i++;
-				break;
-			case 'N':
-			case 'P':
-				while(cs[i] != 'T'){
-					(p + i)->b.time_left -= ts[i];
-					if ((p + i)->b.time_left == 0)
-						goto done;
-					i++;
-				}
-				break;
-		}
-	
-		if ((p + i)->b.time_left == 0)
+		if (time_left < 0)
 			break;
-		if ( i == n)
-			i = 0;
+		if (cs[j] == 'P' || cs[j] == 'N'){
+			time_left -= ts[j];
+			j++;
+		}else if (cs[j] == 'T'){
+			time_left -= ts[j];
+			if (time_left < 0)
+				break;
+			i++;
+			j++;
+		}
 	}
-
-done:
-	printf("%d", (p + i)->label);	
-
+	printf("%d\n", (i % 8) + 1);
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
