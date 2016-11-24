@@ -22,6 +22,7 @@
 #include	<string.h>
 #include	<math.h>
 
+#define DEBUG
 #define MAX_SIZE 10005
 
 typedef enum {false, true}bool;
@@ -64,8 +65,26 @@ find_square ( int n )
 	int
 pad_plain ( char **plain_txt, int l )
 {
+	static int nr_message;
+	int i, m;
+	char *padded_txt = NULL;
+	
+	if((m = find_square(l)) == l)
+		return l;
+	
+	if (!(padded_txt = realloc(*plain_txt, m + 1)))
+		return 1;
 
-	return 0;
+	for (i = l; i < m; i++)
+		padded_txt[i] = '*';
+	
+	*plain_txt = padded_txt;
+
+#ifdef DEBUG
+	nr_message++;
+	printf("Message nr:%d was padded %d times\n", nr_message ,m - l);
+#endif
+	return m;
 }		/* -----  end of function pad_plain  ----- */
 
 /* 
@@ -140,7 +159,7 @@ main ( int argc, char *argv[] )
 	} while (i != n);
 	
 	/* TODO */
-	printf("%d\n", find_square(15));
+	
 	for (i = 0; i < n; i++){
 		free(rows[i]);
 	}
