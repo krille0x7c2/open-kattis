@@ -22,24 +22,9 @@
 #include	<string.h>
 #include	<math.h>
 
-#define DEBUG
 #define MAX_SIZE 10005
 
 typedef enum {false, true}bool;
-
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  rotate_table
- *  Description:  
- * =====================================================================================
- */
-	void
-rotate_table ( void )
-{
-	/* TODO */
-}		/* -----  end of function rotate_table  ----- */
-
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -65,7 +50,6 @@ find_square ( int n )
 	int
 pad_plain ( char **plain_txt, int l )
 {
-	static int nr_message;
 	int i, m;
 	char *padded_txt = NULL;
 	
@@ -81,23 +65,12 @@ pad_plain ( char **plain_txt, int l )
 	*plain_txt = padded_txt;
 
 #ifdef DEBUG
+	static int nr_message;
 	printf("Message nr:%d was padded %d times\n",++nr_message ,m - l);
 #endif
-	
+
 	return m;
 }		/* -----  end of function pad_plain  ----- */
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  encrypt
- *  Description:  
- * =====================================================================================
- */
-	void
-encrypt ( char *str )
-{
-	/* TODO */
-}		/* -----  end of function encrypt  ----- */
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -133,6 +106,67 @@ get_str ( char **str )
 
 /* 
  * ===  FUNCTION  ======================================================================
+ *         Name:  rotate_table
+ *  Description:  
+ * =====================================================================================
+ */
+	void
+rotate_table ( void )
+{
+	/* TODO */
+}		/* -----  end of function rotate_table  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  build_table
+ *  Description:  
+ * =====================================================================================
+ */
+	char **
+build_table ( char *plain_txt, int l)
+{
+	char **table = NULL;
+
+	int i, j, k, len;
+	len = sqrt(l);
+	
+	printf("%d\n", len);	
+	if (!(table = malloc(l)))
+		return NULL;
+	for (i = 0; i < len; i++){
+		if(!(table[i] = malloc(len)))
+			return NULL;
+	}
+	k = 0;
+	for (i = 0; i < len; i++)
+		for (j = 0; j < len; j++)
+			table[i][j] = plain_txt[k++];
+
+	return table;
+}		/* -----  end of function build_table  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  encrypt
+ *  Description:  
+ * =====================================================================================
+ */
+	char *
+encrypt ( char *str, int l )
+{
+	int i, j, m;
+	char *cipher_txt = NULL;
+	char **table = NULL;
+	m = pad_plain(&str, l);
+	
+	table = build_table(str, m);
+	
+	/* TODO */
+
+}		/* -----  end of function encrypt  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
  *         Name:  main
  *  Description:  
  * =====================================================================================
@@ -158,8 +192,8 @@ main ( int argc, char *argv[] )
 		i++;
 	} while (i != n);
 	
-	/* TODO */
-	
+	encrypt(rows[0], strlen(rows[0]));
+		
 	for (i = 0; i < n; i++){
 		free(rows[i]);
 	}
