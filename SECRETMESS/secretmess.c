@@ -81,9 +81,9 @@ pad_plain ( char **plain_txt, int l )
 	*plain_txt = padded_txt;
 
 #ifdef DEBUG
-	nr_message++;
-	printf("Message nr:%d was padded %d times\n", nr_message ,m - l);
+	printf("Message nr:%d was padded %d times\n",++nr_message ,m - l);
 #endif
+	
 	return m;
 }		/* -----  end of function pad_plain  ----- */
 
