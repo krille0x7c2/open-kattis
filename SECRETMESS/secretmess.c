@@ -51,14 +51,9 @@ find_square ( int n )
 {
 	int tmp;
 	tmp = sqrt(n);
-	if (tmp*tmp == n )
-		return n;
-	else{
-		while (tmp*tmp != n){
-			tmp = sqrt(++n);
-		}
-	}
-	return (tmp*tmp);
+	while (tmp * tmp != n)
+		tmp = sqrt(++n);
+	return n;
 }		/* -----  end of function find_square  ----- */
 /* 
  * ===  FUNCTION  ======================================================================
@@ -145,7 +140,7 @@ main ( int argc, char *argv[] )
 	} while (i != n);
 	
 	/* TODO */
-
+	printf("%d\n", find_square(15));
 	for (i = 0; i < n; i++){
 		free(rows[i]);
 	}
