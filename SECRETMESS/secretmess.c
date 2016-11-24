@@ -96,7 +96,7 @@ get_str ( char **str )
 	if (len < 1 || len > 10000)
 		return 1;
 	
-	if (!(str_new = realloc(str_in, len + 1)))
+	if (!(str_new = realloc(str_in, len + 2)))
 		return 1;
 	
 	*str = str_new;
@@ -110,10 +110,35 @@ get_str ( char **str )
  *  Description:  
  * =====================================================================================
  */
-	void
-rotate_table ( void )
+	int
+rotate_table ( char ***table, int l )
 {
-	/* TODO */
+	int i, j, x, y, len;
+	char **new_table = NULL;
+	
+	len = sqrt(l);
+	/* Allocate */
+	if (!(new_table = malloc(l)))
+		return 1;
+
+	for (i = 0; i < len; i++){
+		if(!(new_table[i] = malloc(len)))
+			return 1;
+	}
+	
+	/* Rotate */
+	x = len - 1;
+	y = 0;
+	for (i = 0; i < len; i++){
+		for (j = 0; j < len; j++){
+			new_table[j][i] = table[0][x][y];
+			y++;
+		}
+		x--;
+		y = 0;
+	}
+	*table = new_table;
+	return 0;
 }		/* -----  end of function rotate_table  ----- */
 
 /* 
@@ -154,15 +179,34 @@ build_table ( char *plain_txt, int l)
 	char *
 encrypt ( char *str, int l )
 {
-	int i, j, m;
+	int i, j, m, c, len;
 	char *cipher_txt = NULL;
 	char **table = NULL;
+	
 	m = pad_plain(&str, l);
 	
 	table = build_table(str, m);
-	
-	/* TODO */
 
+	rotate_table(&table, m);
+	len = sqrt(m);
+
+	if (!(cipher_txt = malloc(m + 1)))
+		return NULL;
+	
+	c = 0;
+	for (i = 0; i < len; i++){
+		for (j = 0; j < len; j++){
+			if (table[i][j] != '*')
+				cipher_txt[c++] = table[i][j];
+		}
+	}
+
+	for (i = 0; i < len; i++){
+		free(table[i]);
+		table[i] = NULL;
+	}
+	cipher_txt[c + 1] = '\0';
+	return cipher_txt;
 }		/* -----  end of function encrypt  ----- */
 
 /* 
@@ -174,7 +218,7 @@ encrypt ( char *str, int l )
 	int
 main ( int argc, char *argv[] )
 {
-	char c, *row = NULL, *rows[100] = {NULL};
+	char c, *cipher_str = NULL, *row = NULL, *rows[100] = {NULL};
 	int i, n;
 
 	scanf("%d", &n);
@@ -192,10 +236,19 @@ main ( int argc, char *argv[] )
 		i++;
 	} while (i != n);
 	
-	encrypt(rows[0], strlen(rows[0]));
-		
+	for (i = 0; i < n; i++){
+		cipher_str = encrypt(rows[i], strlen(rows[i]));
+		printf("%s\n", cipher_str);
+		cipher_str = NULL;
+	}
+	
+	free(cipher_str);
+	cipher_str = NULL;
+
 	for (i = 0; i < n; i++){
 		free(rows[i]);
+		rows[i] = NULL;
 	}
+
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
