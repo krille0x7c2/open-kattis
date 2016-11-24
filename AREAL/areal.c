@@ -19,6 +19,7 @@
 
 #include	<stdlib.h>
 #include	<stdio.h>
+#include	<math.h>
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -29,5 +30,12 @@
 	int
 main ( int argc, char *argv[] )
 {
+	const int mul = 4;
+	double len = 0.0;
+	long long a;
+	scanf("%lld", &a);
+	len = sqrt(a) * mul;
+	printf("%f\n", len);
+
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
