@@ -125,18 +125,18 @@ rotate_table ( void )
 	char **
 build_table ( char *plain_txt, int l)
 {
-	char **table = NULL;
-
 	int i, j, k, len;
+	char **table = NULL;
 	len = sqrt(l);
 	
-	printf("%d\n", len);	
 	if (!(table = malloc(l)))
 		return NULL;
+	
 	for (i = 0; i < len; i++){
 		if(!(table[i] = malloc(len)))
 			return NULL;
 	}
+
 	k = 0;
 	for (i = 0; i < len; i++)
 		for (j = 0; j < len; j++)
