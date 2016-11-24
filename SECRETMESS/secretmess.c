@@ -20,11 +20,70 @@
 #include	<stdlib.h>
 #include	<stdio.h>
 #include	<string.h>
+#include	<math.h>
 
 #define MAX_SIZE 10005
 
 typedef enum {false, true}bool;
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  rotate_table
+ *  Description:  
+ * =====================================================================================
+ */
+	void
+rotate_table ( void )
+{
+	/* TODO */
+}		/* -----  end of function rotate_table  ----- */
+
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  find_square
+ *  Description:  
+ * =====================================================================================
+ */
+	int
+find_square ( int n )
+{
+	int tmp;
+	tmp = sqrt(n);
+	if (tmp*tmp == n )
+		return n;
+	else{
+		while (tmp*tmp != n){
+			tmp = sqrt(++n);
+		}
+	}
+	return (tmp*tmp);
+}		/* -----  end of function find_square  ----- */
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  pad_plain
+ *  Description:  
+ * =====================================================================================
+ */
+	int
+pad_plain ( char **plain_txt, int l )
+{
+
+	return 0;
+}		/* -----  end of function pad_plain  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  encrypt
+ *  Description:  
+ * =====================================================================================
+ */
+	void
+encrypt ( char *str )
+{
+	/* TODO */
+}		/* -----  end of function encrypt  ----- */
 
 /* 
  * ===  FUNCTION  ======================================================================
