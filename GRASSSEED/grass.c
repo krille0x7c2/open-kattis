@@ -25,6 +25,19 @@ struct Line {
 	float l;
 };
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  calculate_cost
+ *  Description:  
+ * =====================================================================================
+ */
+	float
+calculate_cost ( float w, float l )
+{	
+	return (w * l);
+}		/* -----  end of function calculate_cost  ----- */
+
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  main
@@ -36,7 +49,7 @@ main ( int argc, char *argv[] )
 {
 	struct Line *line, *lines[100];
 	int i, l;
-	float c;
+	float c, result;
 	scanf("%f", &c);
 	if (c < 0 || c > 100)
 		return 1;
@@ -55,7 +68,12 @@ main ( int argc, char *argv[] )
 		i++;
 	} while (i != l);
 	
-	for (i = 0; i < l; i++)
-		printf("%f %f\n", lines[i]->w, lines[i]->l);
+	result = 0;
+	for (i = 0; i < l; i++){
+		result += calculate_cost(lines[i]->w, lines[i]->l);
+		free(lines[i]);
+	}
+	printf("%f\n", result * c);
+
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
