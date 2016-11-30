@@ -31,7 +31,7 @@ static const char *morse[] = {
 };
 
 static const char *extra[] = {
-	"..--", ".-.-", "---.", "----"
+	".-.-", "---.", "----", "..--"
 };
 
 /* 
