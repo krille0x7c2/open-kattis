@@ -20,7 +20,7 @@
 #include	<stdlib.h>
 #include	<stdio.h>
 #include	<math.h>
-
+#include	<string.h>
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -45,8 +45,18 @@ p_norm ( float x1, float x2, float y1, float y2, float p )
 	int
 main ( int argc, char *argv[] )
 {
-	float x1, x2, y1, y2, p;
-	scanf("%f %f %f %f %f", &x1, &y1, &x2, &y2, &p);
-	printf("%f\n", p_norm(x1, x2, y1, y2, p));
+	int i, n;
+	float x1, x2, y1, y2, p, res[1000];
+	memset(res, 0.0, 1000);
+	n = 0;
+	for (;;){
+		scanf("%f", &x1);
+		if (x1 == 0)
+			break;
+		scanf("%f %f %f %f", &y1, &x2, &y2, &p);
+		res[n++] = p_norm(x1, x2, y1, y2, p); 
+	}
+	for (i = 0; i < n; i++ )
+		printf("%f\n", res[i]);
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
