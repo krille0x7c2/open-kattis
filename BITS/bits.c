@@ -22,7 +22,6 @@
 #include	<string.h>
 
 
-
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  count_ones
@@ -63,32 +62,66 @@ int2bin ( int n )
 	return buffer_cpy;
 }		/* -----  end of function int2bin  ----- */
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  get_max
+ *  Description:  
+ * =====================================================================================
+ */
+	int
+get_max ( char *str, int n )
+{
+	int i, c, tmp, max;
+	char *ptr, *ans;
+
+	if (!(ptr = calloc(33, sizeof(char))))
+		return 1;
+	max = tmp = 0;
+	
+	for (i = 0; i < n; i++){
+		strncpy(ptr, str, i + 1);
+		c = (int) strtol(ptr, NULL, 10);
+		ans = int2bin(c);
+		tmp = count_ones(ans);
+		free(ans);
+		ans = NULL;
+		if (tmp > max)
+			max = tmp;
+	}
+	free(ptr);
+	return max;
+}		/* -----  end of function get_max  ----- */
+
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  main
  *  Description:  
  * =====================================================================================
  */
-#define MAX_SIZE 33
 	int
 main ( int argc, char *argv[] )
 {
-	int i, t, x, mem;
-	char *strs[1000];
+	int i, t, max[1000];
+	char c, *str;
+	memset(max, 0, 1000);
 	scanf("%d", &t);
+	while((c = getchar()) != '\n' && c != EOF)
+		;
+	
 	i = 0;
 	do {
-		scanf("%d", &x);
-		strs[i] = int2bin(x);
+		if (!(str = malloc(33)))
+			return 1;
+		fgets(str, 31, stdin);
+		str[strcspn(str, "\n")] = '\0';
+		max[i] = get_max(str, strlen(str));
+		free(str);
+		str = NULL;
 		i++;
 	} while (i != t);
 
-	mem = 0;
-	for (i = 0; i < t; i++){
-		mem = count_ones(strs[i]);
-		printf("%d\n", mem);
-		free(strs[i]);
-		strs[i] = NULL;
-	}
+	for (i = 0; i < t; i++)
+		printf("%d\n", max[i]);
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
